@@ -1,6 +1,6 @@
-FriendList = new Meteor.Collection("friendlist")
-ListList = new Meteor.Collection("listlist")
-
+FriendList = new Meteor.Collection("friendlist");
+ListList = new Meteor.Collection("listlist");
+ListMembers = new Meteor.Collection("listmembers");
 
 if (Meteor.isClient) {
 
@@ -60,12 +60,15 @@ if (Meteor.isClient) {
     if(Meteor.user()) {
       twitterName = Meteor.user().services.twitter.screenName
       if (!ListList.findOne({twitterName: twitterName})) {
-        lists = getLists(twitterName)
-        if (lists) {
-          ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
-        } else {
-          return false;
-        };
+        Meteor.call("ListsList", twitterName, function(err,result) {
+          if(!err) {
+            console.log('NO error list');
+            lists = JSON.parse(result.content).lists;
+            ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
+          } else {
+            console.log(err);
+          }
+        });
       };
       return ListList.findOne({twitterName: twitterName}).lists;
     } else {
@@ -152,7 +155,18 @@ if (Meteor.isServer) {
         console.log('not logged in')
         return false;
       };
+    },
+    ListMembers: function (list_id) {
+      console.log('members of '+ list_id + ' requested')
+      if(Meteor.user()) {
+        result = twitter.get('lists/members.json', {list_id: list_id});
+        return result;
+      } else {
+        console.log('not logged in')
+        return false;
+      };
     }
+
   });
 
 }
