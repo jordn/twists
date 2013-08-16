@@ -1,4 +1,6 @@
 FriendList = new Meteor.Collection("friendlist")
+ListList = new Meteor.Collection("listlist")
+
 
 if (Meteor.isClient) {
 
@@ -28,16 +30,40 @@ if (Meteor.isClient) {
     };
   };
 
+  Template.lists.lists = function () {
+    if(Meteor.user()) {
+      twitterName = Meteor.user().services.twitter.screenName
+      if (!ListList.findOne({twitterName: twitterName})) {
+        lists = getLists(twitterName)
+        if (lists) {
+          ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
+        } else {
+          return false;
+        };
+      };
+      return ListList.findOne({twitterName: twitterName}).lists;
+    } else {
+      return false;
+    };
+  };
+
+
   Template.hello.events({
     'click input' : function () {
-      console.log('Refreshing friends list');     
+      console.log('Refreshing lists');
+      twitterName = Meteor.user().services.twitter.screenName;
+      if (FriendList.findOne({twitterName: twitterName})) {
+        friendListId = FriendList.findOne({twitterName: twitterName})._id
+        friends = getFriends(twitterName);
+        FriendList.update({_id: friendListId}, {userId: Meteor.userId(), twitterName: twitterName, friends: friends});
+      }
     }
   });
 
 } //end client
 
 function getFriends (twitterName) {
-  Meteor.call("getFriendsList", twitterName, function(err,result) {
+  Meteor.call("FriendsList", twitterName, function(err,result) {
     if(!err) {
       console.log(result);
       friends = JSON.parse(result.content).users;
@@ -49,6 +75,20 @@ function getFriends (twitterName) {
   });
 }
 
+function getLists (twitterName) {
+  Meteor.call("ListsList", twitterName, function(err,result) {
+    if(!err) {
+      console.log(result);
+      lists = JSON.parse(result.content).lists;
+      return lists;
+    } else {
+      console.log(err);
+      return false;
+    }
+  });
+}
+
+
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
@@ -58,9 +98,19 @@ if (Meteor.isServer) {
   var twitter = new Twitter();
   Meteor.methods({
     FriendsList: function (screenName) {
-        console.log('timeline')
+        console.log('friendslist of ' + screenName + 'requested')
         if(Meteor.user()) {
           result = twitter.get('friends/list.json', {screen_name: screenName});
+          return result;
+        } else {
+          console.log('not logged in')
+          return false;
+        };
+    },
+    ListsList: function (screenName) {
+        console.log('lists of '+ screenName + ' requested')
+        if(Meteor.user()) {
+          result = twitter.get('lists/ownerships.json', {screen_name: screenName, count: 1000});
           return result;
         } else {
           console.log('not logged in')
