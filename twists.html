@@ -11,12 +11,13 @@
 
 <template name="hello">
   {{greeting}}
-  <input type="button" value="Reload friends list" />
+  <input class="refresh-friends-button" type="button" value="Reload friends list" />
   Following list
   {{#each friends}}
     {{> following}}
     hello
   {{/each}}
+</div>
 </template>
 
 
