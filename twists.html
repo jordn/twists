@@ -16,15 +16,16 @@
 
   <header>
     <div class="row">
-      <div class="large-3 columns">
-        {{loginButtons}}
+      <div class="large-4 columns">
+        &nbsp;
       </div>
-      <div class="large-6 columns text-center">
+      <div class="large-4 columns text-center">
         <h1>twists</h1>
       </div>
-      <div class="large-3 columns">
-      <input class="refresh-friends-button" type="button" value="Reload friends list" />
-      <input class="lists-button" type="button" value="Get lists" />
+      <div class="large-4 columns">
+      <!--<input class="refresh-friends-button" type="button" value="Reload friends list" />
+      <input class="lists-button" type="button" value="Get lists" />-->
+        {{loginButtons}}
       
       </div>
     </div>
@@ -50,7 +51,7 @@
 <template name="lists">
   <ul>
     {{#each lists}}
-    <li><a href="#" class="list {{slug}}" data-list="{{slug}}">{{name}}</a></li>
+    <li><a href="#" class="list {{slug}}" data-id="{{id}}" data-list="{{slug}}">{{name}}</a></li>
     {{/each}}
   </ul>
 </template>
@@ -58,7 +59,7 @@
 <template name="users">
   <ul class="large-block-grid-1 small-block-grid-1">
     {{#each friends}}
-    <li class="user">
+    <li class="user" data-id="{{id}}">
     <div class="details">
       <div class="row">
         <div class="large-3 columns">

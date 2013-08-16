@@ -45,3 +45,9 @@ header h1 {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif;
   font-weight:700;
 }
+
+.login-display-name {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif !important;
+  color:#FFF;
+  font-weight:400;
+}

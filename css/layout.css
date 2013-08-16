@@ -110,3 +110,32 @@ header {
             padding:6px 20px;
             font-weight:600;
           }
+ 
+ #login-buttons-logout, #login-buttons-twitter {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif !important;
+  font-size:14px !important;
+  border:none !important;
+  background:#000 !important;
+  box-shadow:none !important;
+  opacity:0.6 !important;
+  font-weight:600 !important;
+ }
+
+ #login-buttons-image-twitter {
+   display:none !important;
+ }
+
+ .text-besides-image {
+  margin:0 !important;
+  color:#FFF !important;
+ }
+
+ #login-buttons-logout:hover {
+   opacity:0.9 !important;
+ }
+
+ .login-text-and-button {
+  margin-top:56px !important;
+  text-align:right !important;
+ }
+ 

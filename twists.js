@@ -22,10 +22,16 @@ if (Meteor.isClient) {
       accept: ".list",
       hoverClass: "ui-state-active",
       drop: function(event, ui){
+        $this = $(this);
         $lists = $(this).find(".belongs-to").first();
         $draggable = ui.draggable;
         if ($lists.find("." + $draggable.data('list')).length == 0) {
           $lists.append($("<li></li>").append($draggable.clone()));
+          var user_id = $this.data("id");
+          var list_id = $draggable.data("id");
+          console.log(user_id);
+          console.log(list_id);
+          Meteor.call("AddToList", list_id, user_id, function(err,result){});  
         }
       }
     });
