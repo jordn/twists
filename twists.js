@@ -43,7 +43,6 @@ if (Meteor.isClient) {
       return FriendList.findOne({twitterName: twitterName}).friends;
     } else {
       console.log('not logged in')
-
       return false;
     };
   };
@@ -72,37 +71,36 @@ if (Meteor.isClient) {
       twitterName = Meteor.user().services.twitter.screenName;
       if (FriendList.findOne({twitterName: twitterName})) {
         friendListId = FriendList.findOne({twitterName: twitterName})._id
-        friends = getFriends(twitterName);
-        FriendList.update({_id: friendListId}, {userId: Meteor.userId(), twitterName: twitterName, friends: friends});
+        Meteor.call("FriendsList", twitterName, function(err,result) {
+          if(!err) {
+            console.log('no error friends list');
+            friends = JSON.parse(result.content).users;
+            FriendList.update({_id: friendListId}, {userId: Meteor.userId(), twitterName: twitterName, friends: friends});
+          } else {
+            console.log(err);
+          }
+        });
       }
     },
     'click .lists-button' : function () {
       if(Meteor.user()) {
         twitterName = Meteor.user().services.twitter.screenName
         if (!ListList.findOne({twitterName: twitterName})) {
-          lists = getLists(twitterName)
-          if (lists) {
-            ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
-          }
+          Meteor.call("ListsList", twitterName, function(err,result) {
+            if(!err) {
+              console.log('NO error list');
+              lists = JSON.parse(result.content).lists;
+              ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
+            } else {
+              console.log(err);
+            }
+          });
         };
       }
     } 
   });
 
 } //end client
-
-function getFriends (twitterName) {
-  Meteor.call("FriendsList", twitterName, function(err,result) {
-    if(!err) {
-      console.log('no error friends list');
-      friends = JSON.parse(result.content).users;
-      return friends;
-    } else {
-      console.log(err);
-      return false;
-    }
-  });
-}
 
 function getLists (twitterName) {
   Meteor.call("ListsList", twitterName, function(err,result) {
