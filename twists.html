@@ -6,16 +6,12 @@
 <body>
   <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <!--<link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>-->
-
-
   {{> app}}
 </body>
 
 <template name="hello">
-  <h1>Hello World!</h1>
   {{greeting}}
-  <input type="button" value="Click" />
+  <input type="button" value="Reload friends list" />
   Following list
   {{#each friends}}
     {{> following}}
@@ -40,9 +36,11 @@
         <h1>twists</h1>
       </div>
       <div class="large-3 columns">
+        {{> hello}}
       </div>
     </div>
   </header>
+
 
   <div class="row">
     <div class="large-3 columns">
