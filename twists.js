@@ -65,6 +65,21 @@ if (Meteor.isClient) {
             console.log('NO error list');
             lists = JSON.parse(result.content).lists;
             ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
+            for (var i = lists.length - 1; i >= 0; i--) {
+              console.log("LIST ID:" + lists[i].id)
+              Meteor.call("ListMembers", lists[i].id, function(err,result) {
+                if(!err) {
+                  console.log('no error list members');
+                  listMembers = result;
+                  console.log(result)
+                  ListMembers.insert({userId: Meteor.userId(), twitterName: twitterName, listId: lists[i].id, listMembers: listMembers});
+                } else {
+                  console.log(err);
+                  return false;
+                };
+              });
+            };
+            return lists;
           } else {
             console.log(err);
           }
@@ -165,7 +180,18 @@ if (Meteor.isServer) {
         console.log('not logged in')
         return false;
       };
-    }
+    },
+    AddToList: function (list_id, user_id) {
+      console.log(user_id +'Add to '+ list_id + ' requested');
+      if(Meteor.user()) {
+        result = twitter.post('lists/members/create.json', {list_id: list_id, user_id: user_id});
+        return result;
+      } else {
+        console.log('not logged in')
+        return false;
+      };
+    },
+
 
   });
 
