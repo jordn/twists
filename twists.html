@@ -1,10 +1,12 @@
 <head>
   <title>twists</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 </head>
 
 <body>
   <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
 
 
   {{> app}}
@@ -32,13 +34,12 @@
   <header>
     <div class="row">
       <div class="large-3 columns">
-        &nbsp;
+        {{loginButtons}}
       </div>
       <div class"large-6 columns">
         <h1>twists</h1>
       </div>
       <div class="large-3 columns">
-        &nbsp;
       </div>
     </div>
   </header>
@@ -60,24 +61,25 @@
 
 <template name="lists">
   <ul>
-    <li><a href="#" class="friends">Friends</a></li>
-    <li><a href="#" class="family">Family</a></li>
+    <li><a href="#" class="list friends">Friends</a></li>
+    <li><a href="#" class="list family">Family</a></li>
   </ul>
 </template>
 
 <template name="users">
   <ul class="large-block-grid-1 small-block-grid-1">
+    {{#each friends}}
     <li class="user">
     <div class="details">
       <div class="row">
         <div class="large-3 columns">
           <div class="avatar">
-            <img src="https://si0.twimg.com/profile_images/2222358213/square.jpg" />
+            <img src="{{profile_image_url}}" />
           </div>
         </div>
         <div class="large-9 columns">
-          <h1>Jordan Burgess <small>@jordnb</small></h1>
-          <p>Making something. Cohort member @EntreFirst 2013, previously Cambridge and MIT. Startups, music and technology.</p>
+          <h1>{{name}} <small>@{{screen_name}}</small></h1>
+          <p>{{description}}</p>
         </div>
       </div>
     </div>
@@ -85,9 +87,11 @@
       <li><a href="#" class="family">Family</a></li>
       <li><a href="#" class="friends">Friends</a></li>
     </ul>
-    <div class="overlay">
+    <!--<div class="overlay">
       <div class="bubble"><span>Add to Friends</span></div>
-    </div>
+    </div>-->
     </li>
+    {{/each}}
   </ul>
+
 </template>

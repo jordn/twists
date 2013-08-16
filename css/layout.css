@@ -17,6 +17,7 @@ header {
 .family {background:#97d87d;}
 
 .lists {
+  position:fixed;
 }
 
   .lists ul {
@@ -33,7 +34,11 @@ header {
         padding:6px 20px;
         font-weight:600;
         border-radius:1px;
+  z-index:10000000 !important;
       }
+
+.ui-draggable {
+}
 
 .users {
 }
@@ -48,6 +53,7 @@ header {
       overflow:hidden;
       padding:0;
       position:relative;
+      margin-bottom:24px;
     }
 
       .users ul li.user .overlay {
@@ -84,6 +90,7 @@ header {
       }
 
         .users ul li.user .avatar img {
+          width:100%;
         }
       
       .users ul li.user .belongs-to {

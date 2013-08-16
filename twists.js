@@ -2,7 +2,7 @@ FriendList = new Meteor.Collection("friendlist")
 
 if (Meteor.isClient) {
 
-  Template.hello.greeting = function () {
+  Template.app.greeting = function () {
     if(Meteor.user()) {
       window.twitterName = Meteor.user().services.twitter.screenNames
     }
@@ -12,7 +12,7 @@ if (Meteor.isClient) {
     return "Welcome to twists, " + twitterName ;
   };
 
-  Template.hello.friends = function () {
+  Template.users.friends = function () {
     if(Meteor.user()) {
       twitterName = Meteor.user().services.twitter.screenName
       if (!FriendList.findOne({twitterName: twitterName})) {
@@ -20,6 +20,11 @@ if (Meteor.isClient) {
           if(!err) {
             console.log(result);
             friends = JSON.parse(result.content);
+            console.log(friends.users);
+            friends.users = friends.users.map(function(user){
+              user["profile_image_url"] = user["profile_image_url"].replace("_normal", "_bigger");
+              return user;
+            });
             FriendList.insert({userId: Meteor.userId(), twitterName: twitterName, friends: friends.users});
           } else {
             console.log(err);
@@ -29,11 +34,18 @@ if (Meteor.isClient) {
       };
       return FriendList.findOne({twitterName: twitterName}).friends;
       };
-
-
+  };
+  
+  Template.users.rendered = function () {
+    console.log($(".list"));
+    $(".list").draggable();
+    $("li.user").droppable({
+      accept: ".list",
+      drop: function(event, ui){console.log("yes");}
+    });
   };
 
-  Template.hello.events({
+  Template.app.events({
     'click input' : function () {
       if(Meteor.user()) {
         window.twitterName = Meteor.user().services.twitter.screenName
