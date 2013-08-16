@@ -49,7 +49,7 @@ if (Meteor.isClient) {
 
 
   Template.hello.events({
-    'click input' : function () {
+    'click .refresh-friends-button' : function () {
       console.log('Refreshing lists');
       twitterName = Meteor.user().services.twitter.screenName;
       if (FriendList.findOne({twitterName: twitterName})) {
@@ -57,7 +57,18 @@ if (Meteor.isClient) {
         friends = getFriends(twitterName);
         FriendList.update({_id: friendListId}, {userId: Meteor.userId(), twitterName: twitterName, friends: friends});
       }
-    }
+    },
+    'click .list-button' : function () {
+      if(Meteor.user()) {
+        twitterName = Meteor.user().services.twitter.screenName
+        if (!ListList.findOne({twitterName: twitterName})) {
+          lists = getLists(twitterName)
+          if (lists) {
+            ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
+          }
+        };
+      }
+    } 
   });
 
 } //end client
