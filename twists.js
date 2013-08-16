@@ -71,9 +71,9 @@ if (Meteor.isClient) {
               Meteor.call("ListMembers", lists[i].id, function(err,result) {
                 if(!err) {
                   console.log('no error list members');
-                  listMembers = result;
-                  console.log(result)
-                  ListMembers.insert({userId: Meteor.userId(), twitterName: twitterName, listId: lists[i].id, listMembers: listMembers});
+                  listMembers = JSON.parse(result.content).users;
+                  console.log(listMembers)
+                  ListMembers.insert({userId: Meteor.userId(), twitterName: twitterName, listId: 124123, listMembers: listMembers});
                 } else {
                   console.log(err);
                   return false;
