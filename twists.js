@@ -41,6 +41,7 @@ if (Meteor.isClient) {
     $(".list").draggable();
     $("li.user").droppable({
       accept: ".list",
+      hoverClass: "ui-state-active",
       drop: function(event, ui){console.log("yes");}
     });
   };

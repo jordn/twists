@@ -34,11 +34,7 @@ header {
         padding:6px 20px;
         font-weight:600;
         border-radius:1px;
-  z-index:10000000 !important;
       }
-
-.ui-draggable {
-}
 
 .users {
 }
@@ -63,6 +59,11 @@ header {
         height:100%;
         width:100%;
         background:rgba(245,117,87,0.7);
+        display:none;
+      }
+
+      .users ul li.user.ui-state-active .overlay {
+        display:block;
       }
 
         .users ul li.user .overlay .bubble {
