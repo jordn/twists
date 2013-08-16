@@ -11,4 +11,15 @@
   <h1>Hello World!</h1>
   {{greeting}}
   <input type="button" value="Click" />
+  Following list
+  {{#each friends}}
+    {{> following}}
+    hello
+  {{/each}}
+</template>
+
+
+<template name="following">
+  Hello
+  {{id}}
 </template>
