@@ -30,7 +30,7 @@ if (Meteor.isClient) {
 
   Template.hello.events({
     'click input' : function () {
-      console.log('Refreshing friends list');
+      console.log('Refreshing friends list');     
     }
   });
 
