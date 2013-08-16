@@ -1,0 +1,104 @@
+html, body {
+  background:#363E49;
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    width:720px;
+    margin:0 auto;
+  }
+}
+
+header {
+  text-align:center;
+}
+
+.friends {background:#F57557;}
+.family {background:#97d87d;}
+
+.lists {
+}
+
+  .lists ul {
+    list-style:none;
+  }
+
+    .lists ul li {
+      display:block;
+      height:45px;
+    }
+
+      .lists ul li a {
+        color:#FFF;
+        padding:6px 20px;
+        font-weight:600;
+        border-radius:1px;
+      }
+
+.users {
+}
+  
+  .users ul {
+    list-style:none;
+  }
+
+    .users ul li.user {
+      background:rgba(255,255,255,1);
+      border-radius:2px;
+      overflow:hidden;
+      padding:0;
+      position:relative;
+    }
+
+      .users ul li.user .overlay {
+        position:absolute;
+        top:0;
+        left:0;
+        height:100%;
+        width:100%;
+        background:rgba(245,117,87,0.7);
+      }
+
+        .users ul li.user .overlay .bubble {
+          margin-top:90px;
+          text-align:center;
+        }
+
+          .users ul li.user .overlay .bubble span {
+            border-radius:2px;
+            padding:10px 20px;
+            line-height:18px;
+            font-size:18px;
+            color:#FFF;
+            background:rgba(0,0,0,0.7);
+          }
+
+      .users ul li.user .details {
+        padding:10px;
+      }
+
+      .users ul li.user .avatar {
+        border:5px solid #EAEAEA;
+        border-radius:50%;
+        overflow:hidden;
+      }
+
+        .users ul li.user .avatar img {
+        }
+      
+      .users ul li.user .belongs-to {
+        border-radius:1px;
+        margin:0;
+      }
+
+        .users ul li.user ul.belongs-to li {
+          width:100%;
+        }
+
+          .users ul li.user ul.belongs-to li a {
+            display:block;
+            color:#FFF;
+            width:100%;
+            padding:6px 20px;
+            font-weight:600;
+          }
