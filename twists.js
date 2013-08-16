@@ -4,15 +4,6 @@ ListList = new Meteor.Collection("listlist")
 
 if (Meteor.isClient) {
 
-  Template.app.greeting = function () {
-    if(Meteor.user()) {
-      twitterName = Meteor.user().services.twitter.screenName
-    } else {
-      twitterName = "(Not logged in)"
-    }
-    return "Welcome to twists, " + twitterName ;
-  };
-
   Template.users.rendered = function () {
     console.log($(".list"));
     $(".list").draggable({
@@ -34,15 +25,25 @@ if (Meteor.isClient) {
     if(Meteor.user()) {
       twitterName = Meteor.user().services.twitter.screenName
       if (!FriendList.findOne({twitterName: twitterName})) {
-        friends = getFriends(twitterName)
-        if (friends) {
-          FriendList.insert({userId: Meteor.userId(), twitterName: twitterName, friends: friends});
-        } else {
-          return false;
-        };
+        Meteor.call("FriendsList", twitterName, function(err,result) {
+          if(!err) {
+            console.log('no error friends list');
+            friends = JSON.parse(result.content).users;
+            friends = friends.map(function(friend){
+              friend["profile_image_url"] = friend["profile_image_url"].replace("_normal", "_bigger");
+              return friend;
+            });
+            FriendList.insert({userId: Meteor.userId(), twitterName: twitterName, friends: friends});
+          } else {
+            console.log(err);
+            return false;
+          }
+        });
       };
       return FriendList.findOne({twitterName: twitterName}).friends;
     } else {
+      console.log('not logged in')
+
       return false;
     };
   };
@@ -65,7 +66,7 @@ if (Meteor.isClient) {
   };
 
 
-  Template.hello.events({
+  Template.app.events({
     'click .refresh-friends-button' : function () {
       console.log('Refreshing lists');
       twitterName = Meteor.user().services.twitter.screenName;
@@ -75,7 +76,7 @@ if (Meteor.isClient) {
         FriendList.update({_id: friendListId}, {userId: Meteor.userId(), twitterName: twitterName, friends: friends});
       }
     },
-    'click .list-button' : function () {
+    'click .lists-button' : function () {
       if(Meteor.user()) {
         twitterName = Meteor.user().services.twitter.screenName
         if (!ListList.findOne({twitterName: twitterName})) {
@@ -93,7 +94,7 @@ if (Meteor.isClient) {
 function getFriends (twitterName) {
   Meteor.call("FriendsList", twitterName, function(err,result) {
     if(!err) {
-      console.log(result);
+      console.log('no error friends list');
       friends = JSON.parse(result.content).users;
       return friends;
     } else {
@@ -106,7 +107,7 @@ function getFriends (twitterName) {
 function getLists (twitterName) {
   Meteor.call("ListsList", twitterName, function(err,result) {
     if(!err) {
-      console.log(result);
+      console.log('NO error list');
       lists = JSON.parse(result.content).lists;
       return lists;
     } else {
