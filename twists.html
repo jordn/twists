@@ -5,8 +5,9 @@
 </head>
 
 <body>
-  <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
   {{> app}}
 </body>
 
@@ -48,8 +49,9 @@
 
 <template name="lists">
   <ul>
-    <li><a href="#" class="list friends">Friends</a></li>
-    <li><a href="#" class="list family">Family</a></li>
+    {{#each lists}}
+    <li><a href="#" class="list {{slug}}" data-list="{{slug}}">{{name}}</a></li>
+    {{/each}}
   </ul>
 </template>
 
@@ -71,8 +73,6 @@
       </div>
     </div>
     <ul class="belongs-to">
-      <li><a href="#" class="family">Family</a></li>
-      <li><a href="#" class="friends">Friends</a></li>
     </ul>
     <div class="overlay">
       <div class="bubble"><span>Add to Friends</span></div>

@@ -22,10 +22,11 @@ if (Meteor.isClient) {
       accept: ".list",
       hoverClass: "ui-state-active",
       drop: function(event, ui){
-        var $firstDrag = ui.draggable;
-        var $secondDrag = $(this).children(":first");
-        var $destDrop = $(this);
-        var $sourceDrop = $firstDrag.parent();
+        $lists = $(this).find(".belongs-to").first();
+        $draggable = ui.draggable;
+        if ($lists.find("." + $draggable.data('list')).length == 0) {
+          $lists.append($("<li></li>").append($draggable.clone()));
+        }
       }
     });
   };
@@ -60,7 +61,12 @@ if (Meteor.isClient) {
     if(Meteor.user()) {
       twitterName = Meteor.user().services.twitter.screenName
       if (!ListList.findOne({twitterName: twitterName})) {
-        lists = getLists(twitterName)
+        lists = getLists(twitterName);
+        lists.map(function(list){
+          list["color"] = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+          console.log(list);
+          return list;
+        });
         if (lists) {
           ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
         } else {
@@ -72,6 +78,21 @@ if (Meteor.isClient) {
       return false;
     };
   };
+
+  Template.lists.rendered = function () {
+    function get_random_color() {
+      var letters = '0123456789ABCDEF'.split('');
+      var color = '#';
+      for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.round(Math.random() * 15)];
+      }
+      return color;
+    }
+    _.each(ListList.findOne({twitterName: twitterName}).lists, function(list){
+      $("." + list["slug"]).css("background-color", get_random_color());
+    });
+  }
+
 
 
   Template.app.events({

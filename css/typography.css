@@ -11,9 +11,10 @@ body {
 }
 
 header h1 {
-  font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif;
+  font-family: "Lobster", "Helvetica Neue", "Helvetica", sans-serif;
   color: #FFF; 
-  font-weight:500;
+  font-weight:400;
+  font-size:48px;
 }
 
 .user h1 {

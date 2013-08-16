@@ -13,8 +13,8 @@ header {
   text-align:center;
 }
 
-.friends {background:rgba(245,117,87,1);}
-.family {background:rgba(151,216,125,1);}
+.tech {background:rgba(245,117,87,1);}
+.politics {background:rgba(151,216,125,1);}
 
 .lists {
   position:fixed;
@@ -67,7 +67,7 @@ header {
       }
 
         .users ul li.user .overlay .bubble {
-          margin-top:90px;
+          margin-top:50px;
           text-align:center;
         }
 
