@@ -16,7 +16,16 @@ if (Meteor.isClient) {
   Template.users.rendered = function () {
     console.log($(".list"));
     $(".list").draggable({
-      revert: true
+      revert: "invalid",
+      snap: ".user",
+      snapMode: "inner",
+      helper: "clone",
+      drag: function( event, ui ) {
+        console.log($(this).css('background-color'));
+        $(".overlay span").html("Add to " + $(this).html());
+        var color = $.Color(this,'background-color').alpha(0.7);
+        $(".overlay").css('background-color', color.toRgbaString());
+      }
     });
     $("li.user").droppable({
       accept: ".list",
