@@ -13,8 +13,8 @@ header {
   text-align:center;
 }
 
-.friends {background:#F57557;}
-.family {background:#97d87d;}
+.friends {background:rgba(245,117,87,1);}
+.family {background:rgba(151,216,125,1);}
 
 .lists {
   position:fixed;
