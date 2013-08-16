@@ -15,11 +15,18 @@ if (Meteor.isClient) {
 
   Template.users.rendered = function () {
     console.log($(".list"));
-    $(".list").draggable();
+    $(".list").draggable({
+      revert: true
+    });
     $("li.user").droppable({
       accept: ".list",
       hoverClass: "ui-state-active",
-      drop: function(event, ui){console.log("yes");}
+      drop: function(event, ui){
+        var $firstDrag = ui.draggable;
+        var $secondDrag = $(this).children(":first");
+        var $destDrop = $(this);
+        var $sourceDrop = $firstDrag.parent();
+      }
     });
   };
 
@@ -108,24 +115,24 @@ if (Meteor.isServer) {
   var twitter = new Twitter();
   Meteor.methods({
     FriendsList: function (screenName) {
-        console.log('friendslist of ' + screenName + 'requested')
-        if(Meteor.user()) {
-          result = twitter.get('friends/list.json', {screen_name: screenName});
-          return result;
-        } else {
-          console.log('not logged in')
-          return false;
-        };
+      console.log('friendslist of ' + screenName + 'requested')
+      if(Meteor.user()) {
+        result = twitter.get('friends/list.json', {screen_name: screenName});
+        return result;
+      } else {
+        console.log('not logged in')
+        return false;
+      };
     },
     ListsList: function (screenName) {
-        console.log('lists of '+ screenName + ' requested')
-        if(Meteor.user()) {
-          result = twitter.get('lists/ownerships.json', {screen_name: screenName, count: 1000});
-          return result;
-        } else {
-          console.log('not logged in')
-          return false;
-        };
+      console.log('lists of '+ screenName + ' requested')
+      if(Meteor.user()) {
+        result = twitter.get('lists/ownerships.json', {screen_name: screenName, count: 1000});
+        return result;
+      } else {
+        console.log('not logged in')
+        return false;
+      };
     }
   });
 
