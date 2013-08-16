@@ -46,20 +46,6 @@ if (Meteor.isClient) {
             console.log('no error friends list');
             friends = JSON.parse(result.content).users;
             friends = friends.map(function(friend){
-              friendId = friend.Id;
-              friend["membership"] = [];
-              lists = ListList.find({twitterName: twitterName}).lists;
-              for (var i = lists.length - 1; i >= 0; i--) {
-                listId = lists[i].id;
-                listMembers = ListMembers.findOne({listId: listId}).listMembers;
-                for (var i = listMembers.length - 1; i >= 0; i--) {
-                  if (listMembers[i].id === friendId) {
-                    friend["membership"].push(lists[i]);
-                  }
-                };
-                if (_.contains(list))
-              };
-
               friend["profile_image_url"] = friend["profile_image_url"].replace("_normal", "_bigger");
               return friend;
             });
