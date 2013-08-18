@@ -65,6 +65,9 @@
         <div class="large-9 columns">
           <h1>{{name}} <small>@{{screen_name}}</small></h1>
           <p>{{description}}</p>
+          {{#each membership}}
+            <p style="background-color: red">{{name}}</p>
+          {{/each}}
         </div>
       </div>
     </div>

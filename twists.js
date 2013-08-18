@@ -126,14 +126,16 @@ if (Meteor.isClient) {
             lists = JSON.parse(result.content).lists;
             ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
             for (var i = lists.length - 1; i >= 0; i--) {
-              listId = lists[i].id;
-              console.log("LIST ID:" + listId)
-              Meteor.call("ListMembers", listId, function(err,result) {
+              console.log("LIST ID:" + lists[i].id)
+              Meteor.call("ListMembers", lists[i].id, function(err, result) {
                 if(!err) {
-                  console.log('no error list members');
-                  listMembers = JSON.parse(result.content).users;
+                  listId = result.listId;
+                  console.log("requested members fine LIST ID:" + result.listId)
+                  listMembers = JSON.parse(result.TwitterApiResponse.content).users;
                   console.log(listMembers)
-                  ListMembers.insert({userId: Meteor.userId(), twitterName: twitterName, listId: listId, listMembers: listMembers});
+                  ListMembers.insert({userId: Meteor.userId(), twitterName: twitterName, listId: result.listId, listMembers: listMembers});
+                  console.log('Saved listId: ' + result.listId
+                    )
                 } else {
                   console.log(err);
                   return false;
@@ -250,8 +252,10 @@ if (Meteor.isServer) {
     ListMembers: function (list_id) {
       console.log('members of '+ list_id + ' requested')
       if(Meteor.user()) {
-        result = twitter.get('lists/members.json', {list_id: list_id});
-        return result;
+        TwitterApiResponse = twitter.get('lists/members.json', {list_id: list_id});
+        console.log('LIST MEMBERS RESULT:')
+        // console.log(result)
+        return {TwitterApiResponse: TwitterApiResponse, listId: list_id};
       } else {
         console.log('not logged in')
         return false;
