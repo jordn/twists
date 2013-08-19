@@ -13,28 +13,28 @@
 
   <header>
     <div class="row">
-      <div class="large-4 columns">
+      <div class="small-4 columns">
         &nbsp;
       </div>
-      <div class="large-4 columns text-center">
+      <div class="small-4 columns text-center">
         <h1>TWISTS</h1>
       </div>
-      <div class="large-4 columns">
-      <!--<input class="refresh-friends-button" type="button" value="Reload friends list" />
-      <input class="lists-button" type="button" value="Get lists" />-->
+      <div class="small-4 columns">
+      <input class="refresh-friends-button" type="button" value="Reload friends list" />
+      <input class="lists-button" type="button" value="Get lists" />
         {{loginButtons}}
       </div>
     </div>
   </header>
 
   <div class="row">
-    <div class="large-3 columns">
+    <div class="small-3 columns">
       <div class="lists">
         {{> lists}}
       </div>
-
     </div>
-    <div class="large-9 columns">
+
+    <div class="small-9 columns">
       <div class="users">
         {{> users}}
       </div>
@@ -57,12 +57,12 @@
     <li class="user" data-id="{{id}}">
     <div class="details">
       <div class="row">
-        <div class="large-3 columns">
+        <div class="small-3 columns">
           <div class="avatar">
             <img src="{{profile_image_url}}" />
           </div>
         </div>
-        <div class="large-9 columns">
+        <div class="small-9 columns">
           <h1>{{name}} <small>@{{screen_name}}</small></h1>
           <p>{{description}}</p>
           {{#each membership}}
@@ -74,7 +74,7 @@
     <ul class="belongs-to">
     </ul>
     <div class="overlay">
-      <div class="bubble"><span>Add to Friends</span></div>
+      <div class="bubble"><span>Add to List</span></div>
     </div>
     </li>
     {{/each}}
