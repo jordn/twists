@@ -20,8 +20,6 @@
         <h1>TWISTS</h1>
       </div>
       <div class="small-4 columns">
-      <input class="refresh-friends-button" type="button" value="Reload friends list" />
-      <input class="lists-button" type="button" value="Get lists" />
         {{loginButtons}}
       </div>
     </div>
@@ -35,6 +33,13 @@
     </div>
 
     <div class="small-9 columns">
+      <div class="modifier-button-container">
+        <button id="refresh-friends-button" class="button small radius secondary" type="button">
+          Reload friends list
+          <i class="general foundicon-refresh"></i>
+        </button>
+      </div>
+
       <div class="users">
         {{> users}}
       </div>
@@ -42,6 +47,8 @@
   </div>
 </div>
 </template>
+
+
 
 <template name="lists">
   <ul>

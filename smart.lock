@@ -2,13 +2,19 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "twitter-api": {}
+      "twitter-api": {},
+      "foundation-icons-general": {}
     },
     "packages": {
       "twitter-api": {
         "git": "https://github.com/Sewdn/meteor-twitter-api.git",
         "tag": "v0.1.0",
         "commit": "c7a0dbfe61f6207d40cc1863c45b179aadadbb6a"
+      },
+      "foundation-icons-general": {
+        "git": "https://github.com/IainShigeoka/meteor-foundation-icons-general.git",
+        "tag": "v1.0.1",
+        "commit": "0d16dc77ffb76180d63dcbc58716bd1dbf7d66d5"
       }
     }
   }

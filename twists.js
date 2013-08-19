@@ -132,7 +132,7 @@ if (Meteor.isClient) {
     } else {
       console.log('not logged in')
       return false;
-    };
+    }
   };
 
   Template.lists.lists = function () {
@@ -190,7 +190,7 @@ if (Meteor.isClient) {
 
 
   Template.app.events({
-    'click .refresh-friends-button' : function () {
+    'click #refresh-friends-button' : function () {
       console.log('Refreshing lists');
       twitterName = Meteor.user().services.twitter.screenName
       Meteor.call("RequestTwitterFriends", twitterName, function(error, result) {
@@ -201,23 +201,7 @@ if (Meteor.isClient) {
           console.log('ERROR: ' + error);
         } 
       });
-    },
-    'click .lists-button' : function () {
-      if(Meteor.user()) {
-        twitterName = Meteor.user().services.twitter.screenName
-        if (!ListList.findOne({twitterName: twitterName})) {
-          Meteor.call("ListsList", twitterName, function(err,result) {
-            if(!err) {
-              console.log('NO error list');
-              lists = JSON.parse(result.content).lists;
-              ListList.insert({userId: Meteor.userId(), twitterName: twitterName, lists: lists});
-            } else {
-              console.log(err);
-            }
-          });
-        };
-      }
-    } 
+    }
   });
 
 } //end client

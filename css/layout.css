@@ -17,7 +17,7 @@ header {
 .politics {background:rgba(151,216,125,1);}
 
 .lists {
-  position:fixed;
+  position: fixed;
 }
 
   .lists ul {
@@ -110,6 +110,11 @@ header {
             padding:6px 20px;
             font-weight:600;
           }
+
+.modifier-button-container {
+  float:right;
+  margin: 0 -0.625em;
+}
  
  #login-buttons-logout, #login-buttons-twitter {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif !important;
